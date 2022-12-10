@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example.foodcommercial.entities.Adress;
 import com.example.foodcommercial.entities.CardInformation;
+import com.example.foodcommercial.entities.FavoriteRestaurants;
 import com.example.foodcommercial.entities.User;
 
 public interface IUserService {
@@ -16,6 +17,8 @@ public interface IUserService {
 	void addUserAdress(Long id,Adress adress);
 	
 	List<CardInformation> getCardsOfUser(Long id); 
+	
+	List<FavoriteRestaurants> getFavoriteRestaurants(Long id); 
 	
 	
 	

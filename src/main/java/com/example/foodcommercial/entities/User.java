@@ -57,4 +57,9 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<CardInformation> cards;
 	
+	
+	@JsonBackReference
+	@OneToMany(mappedBy = "user")
+	private List<FavoriteRestaurants> favoriteRestaurants;
+	
 }

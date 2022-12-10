@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.foodcommercial.business.abstracts.IUserService;
 import com.example.foodcommercial.entities.Adress;
 import com.example.foodcommercial.entities.CardInformation;
+import com.example.foodcommercial.entities.FavoriteRestaurants;
 import com.example.foodcommercial.entities.User;
 import com.example.foodcommercial.repositories.AdressRepository;
 import com.example.foodcommercial.repositories.CardInformationRepository;
@@ -73,5 +74,16 @@ public class UserService implements IUserService {
 		// TODO Auto-generated method stub
 		return this.userRepo.findById(id).get().getCards();
 	}
+
+	@Override
+	public List<FavoriteRestaurants> getFavoriteRestaurants(Long id) {
+		// TODO Auto-generated method stub
+		return this.userRepo.findById(id).get().getFavoriteRestaurants();
+	}
+	
+	
+	
+	
+	
 
 }

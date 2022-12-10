@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.foodcommercial.business.concretes.UserService;
 import com.example.foodcommercial.entities.Adress;
 import com.example.foodcommercial.entities.CardInformation;
+import com.example.foodcommercial.entities.FavoriteRestaurants;
 import com.example.foodcommercial.entities.User;
 
 @RestController
@@ -45,6 +46,12 @@ public class UserApi {
 	}
 	
 	
+	@GetMapping("/getfavoriterestaurants/{id}")
+	public List<FavoriteRestaurants> getFavoriteRestaurantsByUserId(@PathVariable(value = "id") Long id){
+		return this.userService.getFavoriteRestaurants(id);
+	}
+	
+	
 	// User register
 	@PostMapping(value = "/register")
 	public void registerUser(@RequestBody User user) {
@@ -58,5 +65,8 @@ public class UserApi {
 	public void addUserAdress(@PathVariable(value = "id") Long id, @RequestBody Adress adress) {
 		this.userService.addUserAdress(id, adress);
 	}
+	
+	
+	
 		
 }
