@@ -21,7 +21,7 @@ import com.example.foodcommercial.entities.User;
 @RestController
 @RequestMapping("/user")
 public class UserApi {
-
+//deneme
 	private UserService userService;
 
 	@Autowired
