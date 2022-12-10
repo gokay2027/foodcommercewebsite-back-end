@@ -1,5 +1,6 @@
 package com.example.foodcommercial.business.concretes;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.foodcommercial.business.abstracts.IUserService;
 import com.example.foodcommercial.entities.Adress;
+import com.example.foodcommercial.entities.CardInformation;
 import com.example.foodcommercial.entities.User;
 import com.example.foodcommercial.repositories.AdressRepository;
+import com.example.foodcommercial.repositories.CardInformationRepository;
 import com.example.foodcommercial.repositories.UserRepository;
 
 @Service
@@ -17,9 +20,11 @@ public class UserService implements IUserService {
 	private UserRepository userRepo;
 	private AdressRepository adressRepo;
 
+
 	@Autowired
 	public UserService(UserRepository userRepo,AdressRepository adressRepo) {
 
+		
 		this.userRepo = userRepo;
 		this.adressRepo=adressRepo;
 
@@ -60,8 +65,11 @@ public class UserService implements IUserService {
 		
 		
 	}
-	
-	
-	
+
+	@Override
+	public List<CardInformation> getCardsOfUser(Long id) {
+		// TODO Auto-generated method stub
+		return this.userRepo.findById(id).get().getCards();
+	}
 
 }
