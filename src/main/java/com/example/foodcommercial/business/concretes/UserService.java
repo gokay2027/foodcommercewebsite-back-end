@@ -20,25 +20,21 @@ public class UserService implements IUserService {
 
 	private UserRepository userRepo;
 	private AdressRepository adressRepo;
-	
-
-
 
 	@Autowired
-	public UserService(UserRepository userRepo,AdressRepository adressRepo) {
+	public UserService(UserRepository userRepo, AdressRepository adressRepo) {
 
 		this.userRepo = userRepo;
-		this.adressRepo=adressRepo;
-		
+		this.adressRepo = adressRepo;
 
 	}
-	
+
 	@Override
 	public Optional<User> loginUser(String email, String password) {
 		// TODO Auto-generated method stub
 
-		if (this.userRepo.loggedUser(email, password) != null) {
-			return this.userRepo.loggedUser(email, password);
+		if (this.userRepo.loginUser(email, password) != null) {
+			return this.userRepo.loginUser(email, password);
 		} else {
 
 			return null;
@@ -52,21 +48,18 @@ public class UserService implements IUserService {
 
 	}
 
-	
-
 	@Override
 	public void addUserAdress(Long id, Adress adress) {
 		// TODO Auto-generated method stub
-		
+
 		User user = this.userRepo.getReferenceById(id);
-		
+
 		this.adressRepo.save(adress);
-		
+
 		user.getAdress().add(adress);
-		
+
 		this.userRepo.save(user);
-		
-		
+
 	}
 
 	@Override
@@ -80,8 +73,7 @@ public class UserService implements IUserService {
 		// TODO Auto-generated method stub
 		return this.userRepo.findById(id).get().getFavoriteRestaurants();
 	}
-	
-	
+
 	
 	
 	

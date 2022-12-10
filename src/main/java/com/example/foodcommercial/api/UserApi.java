@@ -39,19 +39,17 @@ public class UserApi {
 		return this.userService.loginUser(email, password);
 
 	}
-	
+
 	@GetMapping("/getcards/{id}")
-	public List<CardInformation> getCardsOfUser(@PathVariable(value="id") Long id){
+	public List<CardInformation> getCardsOfUser(@PathVariable(value = "id") Long id) {
 		return this.userService.getCardsOfUser(id);
 	}
-	
-	
+
 	@GetMapping("/getfavoriterestaurants/{id}")
-	public List<FavoriteRestaurants> getFavoriteRestaurantsByUserId(@PathVariable(value = "id") Long id){
+	public List<FavoriteRestaurants> getFavoriteRestaurantsByUserId(@PathVariable(value = "id") Long id) {
 		return this.userService.getFavoriteRestaurants(id);
 	}
-	
-	
+
 	// User register
 	@PostMapping(value = "/register")
 	public void registerUser(@RequestBody User user) {
@@ -59,6 +57,9 @@ public class UserApi {
 		// hata alır
 		this.userService.registerUser(user);
 	}
+	
+	
+	
 
 	// User adds adress
 	@PutMapping(value = "/addadress/{id}")
@@ -67,6 +68,5 @@ public class UserApi {
 	}
 	
 	
-	
-		
+
 }

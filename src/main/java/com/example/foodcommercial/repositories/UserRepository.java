@@ -9,13 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import com.example.foodcommercial.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
 	
 	@Query("SELECT u FROM User u WHERE u.email = ?1 and u.password = ?2")
-	Optional<User> loggedUser(String email,String password);
+	Optional<User> loginUser(String email,String password);
 	
-	
-	
-	
-
 }
