@@ -19,12 +19,14 @@ public class UserService implements IUserService {
 
 	private UserRepository userRepo;
 	private AdressRepository adressRepo;
+	
+
 
 
 	@Autowired
 	public UserService(UserRepository userRepo,AdressRepository adressRepo) {
 
-		
+		System.out.println("Selam baran");
 		this.userRepo = userRepo;
 		this.adressRepo=adressRepo;
 		System.out.println("gokisiasdi");
