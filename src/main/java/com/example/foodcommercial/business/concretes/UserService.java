@@ -29,7 +29,7 @@ public class UserService implements IUserService {
 		System.out.println("Selam baran");
 		this.userRepo = userRepo;
 		this.adressRepo=adressRepo;
-		System.out.println("gokisiasdi");
+		
 
 	}
 
