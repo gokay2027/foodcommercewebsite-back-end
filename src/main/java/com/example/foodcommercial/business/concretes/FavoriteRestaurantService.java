@@ -40,5 +40,4 @@ public class FavoriteRestaurantService implements IFavoriteRestaurantService {
 		this.favoriteRestaurantRepo.save(favoriteRestaurant);
 
 	}
-
 }
