@@ -19,7 +19,8 @@ public class FavoriteRestaurantService implements IFavoriteRestaurantService {
 	private RestaurantRepository restaurantRepo;
 
 	@Autowired
-	public FavoriteRestaurantService(FavoriteRestaurantReposistory favoriteRestaurantRepo, UserRepository userRepo,
+	public FavoriteRestaurantService(FavoriteRestaurantReposistory favoriteRestaurantRepo,
+			UserRepository userRepo,
 			RestaurantRepository restaurantRepo) {
 		this.favoriteRestaurantRepo = favoriteRestaurantRepo;
 		this.userRepo = userRepo;
