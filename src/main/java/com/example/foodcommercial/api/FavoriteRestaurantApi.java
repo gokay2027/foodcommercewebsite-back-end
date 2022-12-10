@@ -20,10 +20,8 @@ public class FavoriteRestaurantApi {
 	}
 	
 	
-	
 	@PostMapping("/addfavoriterestaurant/{userid}/{restaurantid}")
 	public void addFavoriteRestaurant(@PathVariable(value="userid") Long userid,@PathVariable(value="restaurantid") Long restaurantid) {
 		this.favoriteRestaurnatService.addFavoriteRestaurant(userid, restaurantid);
 	}
-	
 }
