@@ -20,6 +20,6 @@ public interface IUserService {
 	
 	List<FavoriteRestaurants> getFavoriteRestaurants(Long id); 
 	
-	
+	List<Adress> getUserAdresses(Long id);
 	
 }

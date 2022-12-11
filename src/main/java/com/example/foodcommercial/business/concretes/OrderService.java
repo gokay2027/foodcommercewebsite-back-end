@@ -23,14 +23,11 @@ public class OrderService implements IOrderService {
 	private UserRepository userRepo;
 	private RestaurantRepository restaurantRepo;
 	private AdressRepository addressRepo;
-	
-	
-	
-	
+
 	@Autowired
 	public OrderService(OrderRepository orderRepo, FoodRepository foodRepo, PaymentTypeRepository paymentTypeRepo,
 			UserRepository userRepo, RestaurantRepository restaurantRepo, AdressRepository addressRepo) {
-		
+
 		this.orderRepo = orderRepo;
 		this.foodRepo = foodRepo;
 		this.paymentTypeRepo = paymentTypeRepo;
@@ -39,25 +36,20 @@ public class OrderService implements IOrderService {
 		this.addressRepo = addressRepo;
 	}
 
-
 	@Override
 	public List<Order> getAllOrders() {
 		// TODO Auto-generated method stub
 		return this.orderRepo.findAll();
 	}
 
-	
 	@Override
-	public void giveOrder(Long foodId, Long paymentId,Long userId,Long userAdressId) {
+	public void giveOrder(Long foodId, Long paymentId, Long userId, Long userAdressId) {
 		// TODO Auto-generated method stub
-		
-		Order order  = new Order(null,
-				foodRepo.findById(foodId).get(),
-				paymentTypeRepo.findById(paymentId).get(),
-				userRepo.findById(userId).get(),
-				foodRepo.findById(foodId).get().getRestaurant(),
+
+		Order order = new Order(null, foodRepo.findById(foodId).get(), paymentTypeRepo.findById(paymentId).get(),
+				userRepo.findById(userId).get(), foodRepo.findById(foodId).get().getRestaurant(),
 				addressRepo.findById(userAdressId).get());
-		
+
 		this.orderRepo.save(order);
 	}
 }

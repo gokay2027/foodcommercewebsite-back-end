@@ -50,26 +50,24 @@ public class UserApi {
 		return this.userService.getFavoriteRestaurants(id);
 	}
 
+	@GetMapping("/getuseradresses")
+	public List<Adress> getUserAdresses(@RequestParam Long id) {
+		return this.userService.getUserAdresses(id);
+	}
+
 	// User register
 	@PostMapping(value = "/register")
-	public void registerUser(@RequestParam String name,@RequestParam String surname,
-			@RequestParam String email,@RequestParam String password,
-			@RequestParam String phoneNumber,
-			@RequestParam String birthDate) {
+	public void registerUser(@RequestParam String name, @RequestParam String surname, @RequestParam String email,
+			@RequestParam String password, @RequestParam String phoneNumber, @RequestParam String birthDate) {
 		// Email unique olduğu için aynı emaildern user girerse
 		// hata alır
 		this.userService.registerUser(name, surname, email, password, phoneNumber, birthDate);
 	}
-	
-	
-	
 
 	// User adds adress
 	@PutMapping(value = "/addadress/{id}")
 	public void addUserAdress(@PathVariable(value = "id") Long id, @RequestBody Adress adress) {
 		this.userService.addUserAdress(id, adress);
 	}
-	
-	
 
 }

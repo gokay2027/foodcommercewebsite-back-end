@@ -73,4 +73,14 @@ public class UserService implements IUserService {
 		// TODO Auto-generated method stub
 		return this.userRepo.findById(id).get().getFavoriteRestaurants();
 	}
+
+	@Override
+	public List<Adress> getUserAdresses(Long id) {
+		// TODO Auto-generated method stub
+		return this.userRepo.findById(id).get().getAdress();
+	}
+	
+	
+	
+	
 }
