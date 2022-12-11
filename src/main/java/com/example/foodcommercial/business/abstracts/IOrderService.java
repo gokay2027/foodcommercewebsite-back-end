@@ -8,6 +8,6 @@ public interface IOrderService {
 	
 	List<Order> getAllOrders();
 	
-	void giveOrder(Order order);
+	void giveOrder(Long foodId, Long paymentId,Long userId,Long userAdressId);
 	
 }

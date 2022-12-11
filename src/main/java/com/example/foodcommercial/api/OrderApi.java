@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.foodcommercial.business.abstracts.IOrderService;
@@ -31,8 +32,14 @@ public class OrderApi {
 	}
 	
 	@PostMapping(value = "/neworder")
-	public void addOrder(@RequestBody Order order) {
-		this.orderService.giveOrder(order);
+	public void addOrder(@RequestParam Long foodId,
+			@RequestParam Long paymentId,
+			@RequestParam Long userId,
+			
+			@RequestParam Long userAdressId) {
+		
+		this.orderService.giveOrder(foodId,paymentId,userId,userAdressId);
+	
 	}
 	
 }

@@ -52,10 +52,13 @@ public class UserApi {
 
 	// User register
 	@PostMapping(value = "/register")
-	public void registerUser(@RequestBody User user) {
+	public void registerUser(@RequestParam String name,@RequestParam String surname,
+			@RequestParam String email,@RequestParam String password,
+			@RequestParam String phoneNumber,
+			@RequestParam String birthDate) {
 		// Email unique olduğu için aynı emaildern user girerse
 		// hata alır
-		this.userService.registerUser(user);
+		this.userService.registerUser(name, surname, email, password, phoneNumber, birthDate);
 	}
 	
 	
