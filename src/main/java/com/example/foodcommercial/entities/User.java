@@ -13,6 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -32,15 +35,22 @@ public class User {
 	private Long id;
 		
 	@Column
+	@NotBlank
+	@NotNull
 	private String name;
 	
 	@Column
 	private String surname;
 	
 	@Column(unique = true)
+	@Email
+	@NotBlank
+	@NotNull
 	private String email;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private String password;
 	
 	@Column

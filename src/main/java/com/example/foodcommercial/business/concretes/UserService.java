@@ -41,10 +41,11 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void registerUser(String name,String surname,String email,String password,String phoneNumber,String birthDate ) {
+	public Optional<User> registerUser(String name,String surname,String email,String password,String phoneNumber,String birthDate ) {
 		// TODO Auto-generated method stub
 		User user = new User(null,name,surname,email,password,phoneNumber,birthDate,null,null,null);
 		userRepo.save(user);
+		return this.userRepo.loginUser(email, password);
 	}
 
 	@Override
