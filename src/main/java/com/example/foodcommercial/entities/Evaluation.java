@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,14 +32,20 @@ public class Evaluation {
 	private String content;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private int rateValue;
 	
 	@ManyToOne
 	@JoinColumn(nullable=false)
+	@NotBlank
+	@NotNull
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(nullable=false)
+	@NotBlank
+	@NotNull
 	private Restaurant restaurant;
 	
 	

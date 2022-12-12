@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +29,8 @@ public class Food {
 	private Long id;
 
 	@Column
+	@NotBlank
+	@NotNull
 	private String name;
 
 	@Column
@@ -33,10 +38,14 @@ public class Food {
 
 	@ManyToOne
 	@JoinColumn
+	@NotBlank
+	@NotNull
 	private Category category;
 
 	@ManyToOne
 	@JoinColumn
+	@NotBlank
+	@NotNull
 	private Portion portion;
 
 	@ManyToOne

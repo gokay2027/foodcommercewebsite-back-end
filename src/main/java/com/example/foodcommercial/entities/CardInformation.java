@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,19 +28,29 @@ public class CardInformation {
 	private Long id;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private String endDate;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private String ccv;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private String cardNumber;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private String cardName;
 		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
+	@NotBlank
+	@NotNull
 	private User user;
 
 }

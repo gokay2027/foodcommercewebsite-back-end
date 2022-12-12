@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,10 +29,14 @@ public class FavoriteRestaurants {
 	
 	@ManyToOne
 	@JoinColumn
+	@NotBlank
+	@NotNull
 	private Restaurant restaurant;
 	
 	@ManyToOne
 	@JoinColumn
+	@NotBlank
+	@NotNull
 	private User user;
 	
 }
