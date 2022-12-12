@@ -12,7 +12,6 @@ import com.example.foodcommercial.entities.CardInformation;
 import com.example.foodcommercial.entities.FavoriteRestaurants;
 import com.example.foodcommercial.entities.User;
 import com.example.foodcommercial.repositories.AdressRepository;
-import com.example.foodcommercial.repositories.CardInformationRepository;
 import com.example.foodcommercial.repositories.UserRepository;
 
 @Service
