@@ -11,7 +11,7 @@ import com.example.foodcommercial.repositories.AdressRepository;
 import com.example.foodcommercial.repositories.FoodRepository;
 import com.example.foodcommercial.repositories.OrderRepository;
 import com.example.foodcommercial.repositories.PaymentTypeRepository;
-import com.example.foodcommercial.repositories.RestaurantRepository;
+
 import com.example.foodcommercial.repositories.UserRepository;
 
 @Service
@@ -21,18 +21,17 @@ public class OrderService implements IOrderService {
 	private FoodRepository foodRepo;
 	private PaymentTypeRepository paymentTypeRepo;
 	private UserRepository userRepo;
-	private RestaurantRepository restaurantRepo;
+
 	private AdressRepository addressRepo;
 
 	@Autowired
 	public OrderService(OrderRepository orderRepo, FoodRepository foodRepo, PaymentTypeRepository paymentTypeRepo,
-			UserRepository userRepo, RestaurantRepository restaurantRepo, AdressRepository addressRepo) {
+			UserRepository userRepo, AdressRepository addressRepo) {
 
 		this.orderRepo = orderRepo;
 		this.foodRepo = foodRepo;
 		this.paymentTypeRepo = paymentTypeRepo;
 		this.userRepo = userRepo;
-		this.restaurantRepo = restaurantRepo;
 		this.addressRepo = addressRepo;
 	}
 
