@@ -12,7 +12,7 @@ public interface IUserService {
 	
 	Optional<User> loginUser(String email,String password);
 	
-	Optional<User> registerUser(String name,String surname,String email,String password,String phoneNumber,String birthDate);
+	Optional<User> registerUser(String name, String surname, String email, String password, String phoneNumber, String birthDate);
 	
 	void addUserAdress(Long id,Adress adress);
 	
