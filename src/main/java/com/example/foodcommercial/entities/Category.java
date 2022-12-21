@@ -1,17 +1,15 @@
 package com.example.foodcommercial.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,5 +26,12 @@ public class Category {
 	@NotBlank
 	@NotNull
 	private String name;
+
+	@JsonBackReference
+	@ManyToMany
+	@JoinTable(name = "restaurant_category",
+	joinColumns = @JoinColumn(name = "category_id"),
+	inverseJoinColumns = @JoinColumn(name = "restaurant_id"))
+	private List<Restaurant> restaurants;
 	
 }

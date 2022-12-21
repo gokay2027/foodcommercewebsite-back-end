@@ -1,5 +1,6 @@
 package com.example.foodcommercial.business.concretes;
 
+import com.example.foodcommercial.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,10 @@ public class CardService implements ICardService {
 	}
 
 	@Override
-	public void addCard(Long id, CardInformation cardInfo) {
-		cardInfo.setUser(userRepo.getReferenceById(id));
-		this.cardInfoRepo.save(cardInfo);
+	public void addCard(String endDate, String ccv, String cardNumber, String cardName, Long userId) {
+		User user = this.userRepo.getReferenceById(userId);
+		CardInformation card = new CardInformation(null, endDate, ccv, cardNumber, cardName, user);
+		this.cardInfoRepo.save(card);
 	}
 	
 	

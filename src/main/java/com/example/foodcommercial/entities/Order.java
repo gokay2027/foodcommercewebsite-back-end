@@ -27,20 +27,14 @@ public class Order {
 	
 	@ManyToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
 	private Food food;
 	
 	@ManyToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
 	private PaymentType paymentType;
 	
 	@ManyToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
 	private User user;
 	
 	@ManyToOne
@@ -51,7 +45,5 @@ public class Order {
 	
 	@ManyToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
-	private Adress userAdress;
+	private Address userAddress;
 }

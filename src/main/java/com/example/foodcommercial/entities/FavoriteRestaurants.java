@@ -29,14 +29,10 @@ public class FavoriteRestaurants {
 	
 	@ManyToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
 	private Restaurant restaurant;
 	
 	@ManyToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
 	private User user;
 	
 }

@@ -16,5 +16,7 @@ public interface IRestaurantService {
 	public List<Food> getFoodListByRestaurantId(Long id);	
 	
 	public List<Evaluation> getEvaluationsByRestaurantId(Long id);
+
+	public void add(String name, Long addressId);
 	
 }

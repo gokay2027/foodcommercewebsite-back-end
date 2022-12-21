@@ -49,8 +49,6 @@ public class CardInformation {
 		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn
-	@NotBlank
-	@NotNull
 	private User user;
 
 }

@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name="user")
+@Table(name="users")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -61,15 +61,15 @@ public class User {
 	
 	@ManyToMany(cascade = CascadeType.DETACH)
 	@JoinColumn
-	private List<Adress> adress;
+	private List<Address> addresses;
 	
 	@JsonBackReference
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<CardInformation> cards;
 	
 	
 	@JsonBackReference
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<FavoriteRestaurants> favoriteRestaurants;
 	
 }

@@ -7,21 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.foodcommercial.business.abstracts.IUserService;
-import com.example.foodcommercial.entities.Adress;
+import com.example.foodcommercial.entities.Address;
 import com.example.foodcommercial.entities.CardInformation;
 import com.example.foodcommercial.entities.FavoriteRestaurants;
 import com.example.foodcommercial.entities.User;
-import com.example.foodcommercial.repositories.AdressRepository;
+import com.example.foodcommercial.repositories.AddressRepository;
 import com.example.foodcommercial.repositories.UserRepository;
 
 @Service
 public class UserService implements IUserService {
 
 	private UserRepository userRepo;
-	private AdressRepository adressRepo;
+	private AddressRepository adressRepo;
 
 	@Autowired
-	public UserService(UserRepository userRepo, AdressRepository adressRepo) {
+	public UserService(UserRepository userRepo, AddressRepository adressRepo) {
 
 		this.userRepo = userRepo;
 		this.adressRepo = adressRepo;
@@ -49,14 +49,14 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void addUserAdress(Long id, Adress adress) {
+	public void addUserAdress(Long id, Address address) {
 		// TODO Auto-generated method stub
 
 		User user = this.userRepo.getReferenceById(id);
 
-		this.adressRepo.save(adress);
+		this.adressRepo.save(address);
 
-		user.getAdress().add(adress);
+		user.getAddresses().add(address);
 
 		this.userRepo.save(user);
 
@@ -75,9 +75,9 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public List<Adress> getUserAdresses(Long id) {
+	public List<Address> getUserAdresses(Long id) {
 		// TODO Auto-generated method stub
-		return this.userRepo.findById(id).get().getAdress();
+		return this.userRepo.findById(id).get().getAddresses();
 	}
 	
 	

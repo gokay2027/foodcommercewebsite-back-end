@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.foodcommercial.business.abstracts.IOrderService;
 import com.example.foodcommercial.entities.Order;
-import com.example.foodcommercial.repositories.AdressRepository;
+import com.example.foodcommercial.repositories.AddressRepository;
 import com.example.foodcommercial.repositories.FoodRepository;
 import com.example.foodcommercial.repositories.OrderRepository;
 import com.example.foodcommercial.repositories.PaymentTypeRepository;
@@ -22,11 +22,11 @@ public class OrderService implements IOrderService {
 	private PaymentTypeRepository paymentTypeRepo;
 	private UserRepository userRepo;
 
-	private AdressRepository addressRepo;
+	private AddressRepository addressRepo;
 
 	@Autowired
 	public OrderService(OrderRepository orderRepo, FoodRepository foodRepo, PaymentTypeRepository paymentTypeRepo,
-			UserRepository userRepo, AdressRepository addressRepo) {
+			UserRepository userRepo, AddressRepository addressRepo) {
 
 		this.orderRepo = orderRepo;
 		this.foodRepo = foodRepo;

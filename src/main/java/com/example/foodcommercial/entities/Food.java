@@ -1,21 +1,15 @@
 package com.example.foodcommercial.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -38,15 +32,13 @@ public class Food {
 
 	@ManyToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
 	private Category category;
 
-	@ManyToOne
-	@JoinColumn
-	@NotBlank
-	@NotNull
-	private Portion portion;
+	@ManyToMany
+	@JoinTable(name = "food_portion",
+			joinColumns = @JoinColumn(name = "food_id"),
+			inverseJoinColumns = @JoinColumn(name = "portion_id"))
+	private List<Portion> portion;
 
 	@ManyToOne
 	@JoinColumn

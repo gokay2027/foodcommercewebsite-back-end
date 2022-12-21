@@ -4,16 +4,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -39,9 +31,7 @@ public class Restaurant {
 	
 	@OneToOne
 	@JoinColumn
-	@NotBlank
-	@NotNull
-	private Adress adress;
+	private Address address;
 		
 	@JsonBackReference
 	@OneToMany(mappedBy = "restaurant")
@@ -50,6 +40,11 @@ public class Restaurant {
 	@JsonBackReference
 	@OneToMany(mappedBy = "restaurant")
 	private List<Evaluation> evaluations;
-	
-	
+
+	@JsonBackReference
+	@ManyToMany
+	@JoinTable(name = "restaurant_category",
+			joinColumns = @JoinColumn(name = "restaurant_id"),
+			inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<Category> category;
 }

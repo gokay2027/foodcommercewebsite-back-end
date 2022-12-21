@@ -6,12 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.validation.Constraint;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
-import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -29,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.foodcommercial.business.concretes.UserService;
-import com.example.foodcommercial.entities.Adress;
+import com.example.foodcommercial.entities.Address;
 import com.example.foodcommercial.entities.CardInformation;
 import com.example.foodcommercial.entities.FavoriteRestaurants;
 import com.example.foodcommercial.entities.User;
@@ -67,7 +64,7 @@ public class UserApi {
 	}
 
 	@GetMapping("/getuseradresses")
-	public List<Adress> getUserAdresses(@RequestParam Long id) {
+	public List<Address> getUserAdresses(@RequestParam Long id) {
 		return this.userService.getUserAdresses(id);
 	}
 
@@ -81,9 +78,9 @@ public class UserApi {
 	}
 
 	// User adds adress
-	@PutMapping(value = "/addadress/{id}")
-	public void addUserAdress(@PathVariable(value = "id") Long id, @Valid @RequestBody Adress adress) {
-		this.userService.addUserAdress(id, adress);
+	@PostMapping(value = "/addadress/{id}")
+	public void addUserAdress(@PathVariable(value = "id") Long id, @Valid @RequestBody Address address) {
+		this.userService.addUserAdress(id, address);
 	}
 	
 	

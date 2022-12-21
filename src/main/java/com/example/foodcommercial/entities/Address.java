@@ -17,20 +17,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="adress")
-public class Adress {
+@Table(name="address")
+public class Address {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private String streetNo;
 	
 	@Column
 	private String hoodName;
 	
 	@Column
+	@NotBlank
+	@NotNull
 	private String buildingNumber;
 	
 	@Column

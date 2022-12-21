@@ -38,14 +38,10 @@ public class Evaluation {
 	
 	@ManyToOne
 	@JoinColumn(nullable=false)
-	@NotBlank
-	@NotNull
 	private User user;
 	
 	@ManyToOne
 	@JoinColumn(nullable=false)
-	@NotBlank
-	@NotNull
 	private Restaurant restaurant;
 	
 	
