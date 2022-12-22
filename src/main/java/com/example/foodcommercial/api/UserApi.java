@@ -1,14 +1,15 @@
 package com.example.foodcommercial.api;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
+import com.example.foodcommercial.core.utilities.results.DataResult;
+import com.example.foodcommercial.core.utilities.results.ErrorDataResult;
+import com.example.foodcommercial.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -31,7 +32,6 @@ import com.example.foodcommercial.entities.CardInformation;
 import com.example.foodcommercial.entities.FavoriteRestaurants;
 import com.example.foodcommercial.entities.User;
 
-@Validated
 @RestController
 @RequestMapping("/user")
 public class UserApi {
@@ -46,60 +46,61 @@ public class UserApi {
 
 	// User login
 	@GetMapping("/{email}/{password}")
-	public Optional<User> logginUser(@PathVariable(value = "email") String email,
-			@PathVariable(value = "password") String password) {
-
+	public DataResult<User> logginUser(@PathVariable(value = "email") String email,
+									   @PathVariable(value = "password") String password) {
 		return this.userService.loginUser(email, password);
-
-	}
-
-	@GetMapping("/getcards/{id}")
-	public List<CardInformation> getCardsOfUser(@PathVariable(value = "id") Long id) {
-		return this.userService.getCardsOfUser(id);
-	}
-
-	@GetMapping("/getfavoriterestaurants/{id}")
-	public List<FavoriteRestaurants> getFavoriteRestaurantsByUserId(@PathVariable(value = "id") Long id) {
-		return this.userService.getFavoriteRestaurants(id);
-	}
-
-	@GetMapping("/getuseradresses")
-	public List<Address> getUserAdresses(@RequestParam Long id) {
-		return this.userService.getUserAdresses(id);
 	}
 
 	// User register
 	@PostMapping(value = "/register")
-	public Optional<User> registerUser(@Valid @RequestParam String name, @RequestParam String surname, @Valid @RequestParam String email,
-			@Valid @RequestParam String password, @RequestParam String phoneNumber, @RequestParam String birthDate) {
-		// Email unique olduğu için aynı emaildern user girerse
-		// hata alır
+	public Result registerUser(@RequestParam String name, @RequestParam String surname, @RequestParam String email,
+							   @RequestParam String password, @RequestParam String phoneNumber, @RequestParam String birthDate) {
 		return this.userService.registerUser(name, surname, email, password, phoneNumber, birthDate);
 	}
 
 	// User adds adress
 	@PostMapping(value = "/addadress/{id}")
-	public void addUserAdress(@PathVariable(value = "id") Long id, @Valid @RequestBody Address address) {
-		this.userService.addUserAdress(id, address);
+	public Result addUserAdress(@PathVariable(value = "id") Long id, @Valid @RequestBody Address address) {
+		return this.userService.addUserAdress(id, address);
 	}
-	
-	
-	@ExceptionHandler(ValidationException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)	
-	public String handleValidationException(ValidationException exceptions) {
-	
-		return exceptions.getMessage();
+
+	@GetMapping("/getcards/{id}")
+	public DataResult<List<CardInformation>> getCardsOfUser(@PathVariable(value = "id") Long id) {
+		return this.userService.getCardsOfUser(id);
 	}
-	
+
+	@GetMapping("/getfavoriterestaurants/{id}")
+	public DataResult<List<FavoriteRestaurants>> getFavoriteRestaurantsByUserId(@PathVariable(value = "id") Long id) {
+		return this.userService.getFavoriteRestaurants(id);
+	}
+
+	@GetMapping("/getuseradresses")
+	public DataResult<List<Address>> getUserAdresses(@RequestParam Long id) {
+		return this.userService.getUserAdresses(id);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)	
-	public Collection<String> handleValidationException(MethodArgumentNotValidException exceptions) {
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions) {
 		Map<String,String> validationErrors = new HashMap<String,String>();
 		for(FieldError fieldError : exceptions.getBindingResult().getFieldErrors()) {
 			validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
 		}
-		
-		return validationErrors.values();
+		ErrorDataResult<Object> errors =
+				new ErrorDataResult<Object>(validationErrors, "Validation Errors!");
+		return errors;
 	}
+
+	@ExceptionHandler(ValidationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)	
+	public ErrorDataResult<Object> handleValidationException(ValidationException exceptions) {
+
+		ErrorDataResult<Object> errors =
+				new ErrorDataResult<Object>(exceptions.getMessage(), "Validation Errors!");
+		return errors;
+	}
+	
+
+
 
 }

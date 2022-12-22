@@ -1,8 +1,8 @@
 package com.example.foodcommercial.business.concretes;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.example.foodcommercial.core.utilities.results.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,55 +29,48 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Optional<User> loginUser(String email, String password) {
-		// TODO Auto-generated method stub
+	public DataResult<User> loginUser(String email, String password) {
 
 		if (this.userRepo.loginUser(email, password) != null) {
-			return this.userRepo.loginUser(email, password);
+			return new SuccessDataResult<User>(this.userRepo.loginUser(email, password),
+					"Login Successful!");
 		} else {
-
-			return null;
+			return new ErrorDataResult<>("Login Failed!");
 		}
 	}
 
 	@Override
-	public Optional<User> registerUser(String name, String surname, String email, String password, String phoneNumber, String birthDate) {
-		// TODO Auto-generated method stub
+	public Result registerUser(String name, String surname, String email, String password, String phoneNumber, String birthDate) {
 		User user = new User(null,name,surname,email,password,phoneNumber,birthDate,null,null,null);
 		userRepo.save(user);
-		return this.userRepo.loginUser(email, password);
+		return new SuccessResult("Registration Successful!");
 	}
 
 	@Override
-	public void addUserAdress(Long id, Address address) {
-		// TODO Auto-generated method stub
-
+	public Result addUserAdress(Long id, Address address) {
 		User user = this.userRepo.getReferenceById(id);
-
 		this.adressRepo.save(address);
-
 		user.getAddresses().add(address);
-
 		this.userRepo.save(user);
-
+		return new SuccessResult("Add Address Successful!");
 	}
 
 	@Override
-	public List<CardInformation> getCardsOfUser(Long id) {
-		// TODO Auto-generated method stub
-		return this.userRepo.findById(id).get().getCards();
+	public DataResult<List<CardInformation>> getCardsOfUser(Long id) {
+		return new SuccessDataResult<List<CardInformation>>
+				(this.userRepo.getReferenceById(id).getCards());
 	}
 
 	@Override
-	public List<FavoriteRestaurants> getFavoriteRestaurants(Long id) {
-		// TODO Auto-generated method stub
-		return this.userRepo.findById(id).get().getFavoriteRestaurants();
+	public DataResult<List<FavoriteRestaurants>> getFavoriteRestaurants(Long id) {
+		return new SuccessDataResult<List<FavoriteRestaurants>>
+				(this.userRepo.getReferenceById(id).getFavoriteRestaurants());
 	}
 
 	@Override
-	public List<Address> getUserAdresses(Long id) {
-		// TODO Auto-generated method stub
-		return this.userRepo.findById(id).get().getAddresses();
+	public DataResult<List<Address>> getUserAdresses(Long id) {
+		return new SuccessDataResult<List<Address>>
+				(this.userRepo.getReferenceById(id).getAddresses());
 	}
 	
 	

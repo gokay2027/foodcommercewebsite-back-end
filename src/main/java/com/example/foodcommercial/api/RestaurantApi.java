@@ -2,6 +2,8 @@ package com.example.foodcommercial.api;
 
 import java.util.*;
 
+import com.example.foodcommercial.core.utilities.results.DataResult;
+import com.example.foodcommercial.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -28,28 +30,43 @@ public class RestaurantApi {
 	}
 
 	@GetMapping("/getall")
-	public List<Restaurant> getAllRestaurants() {
+	public DataResult<List<Restaurant>> getAllRestaurants() {
 		return restaurantService.getAllRestaurants();
 	}
 
 	@GetMapping("/{id}")
-	public Optional<Restaurant> getRestaurantById(@PathVariable(name = "id") Long id) {
+	public DataResult<Restaurant> getRestaurantById(@PathVariable(name = "id") Long id) {
 		return restaurantService.getRestaurantById(id);
 	}
 
 	@GetMapping("restaurantmenu/{id}")
-	public List<Food> getRestaurantMenuById(@PathVariable(name = "id") Long id) {
+	public DataResult<List<Food>> getRestaurantMenuById(@PathVariable(name = "id") Long id) {
 		return restaurantService.getFoodListByRestaurantId(id);
 	}
 	
 	@GetMapping("/restaurantevaluation/{id}")
-	public List<Evaluation> getEvaluationByRestaurantId(@PathVariable(name = "id") Long id) {
+	public DataResult<List<Evaluation>> getEvaluationByRestaurantId(@PathVariable(name = "id") Long id) {
 		return this.restaurantService.getEvaluationsByRestaurantId(id);
 	}
 
+	@GetMapping("/restaurantbyname")
+	public DataResult<List<Restaurant>> getRestaurantsByNameContainsIgnoreCase(String name){
+		return this.restaurantService.getRestaurantsByNameContainsIgnoreCase(name);
+	}
+
+//	@GetMapping("/restaurantbycategory")
+//	public DataResult<List<Restaurant>> getRestaurantsByCategoryContainsIgnoreCase(String category){
+//		return this.restaurantService.getRestaurantsByCategoryContainsIgnoreCase(category);
+//	}
+
+	@PostMapping("/addCategory")
+	public Result addCategory(Long restaurantId, Long categoryId){
+		return this.restaurantService.addCategory(restaurantId, categoryId);
+	}
+
 	@PostMapping("/add")
-	public void add(@Valid @RequestParam String name, @RequestParam Long addressId){
-		this.restaurantService.add(name,addressId);
+	public Result add(@RequestParam String name, @RequestParam Long addressId){
+		return this.restaurantService.add(name,addressId);
 	}
 
 	@ExceptionHandler(ValidationException.class)
