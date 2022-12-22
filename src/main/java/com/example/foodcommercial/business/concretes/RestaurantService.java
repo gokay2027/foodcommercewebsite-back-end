@@ -5,28 +5,32 @@ import java.util.Optional;
 
 import com.example.foodcommercial.core.utilities.results.*;
 import com.example.foodcommercial.entities.*;
-import com.example.foodcommercial.repositories.AddressRepository;
-import com.example.foodcommercial.repositories.CategoryRepository;
+import com.example.foodcommercial.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.foodcommercial.business.abstracts.IRestaurantService;
-import com.example.foodcommercial.repositories.RestaurantRepository;
 
 @Service
 public class RestaurantService implements IRestaurantService {
 	
-	RestaurantRepository restaurantRepo;
-	AddressRepository addressRepository;
-	CategoryRepository categoryRepository;
+	private RestaurantRepository restaurantRepo;
+	private AddressRepository addressRepository;
+	private CategoryRepository categoryRepository;
+	private EvaluationRepository evaluationRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
 	public RestaurantService(RestaurantRepository restaurantRepo,
 							 AddressRepository addressRepository,
-							 CategoryRepository categoryRepository) {
+							 CategoryRepository categoryRepository,
+							 EvaluationRepository evaluationRepository,
+							 UserRepository userRepository) {
 		this.restaurantRepo=restaurantRepo;
 		this.addressRepository=addressRepository;
 		this.categoryRepository=categoryRepository;
+		this.evaluationRepository=evaluationRepository;
+		this.userRepository=userRepository;
 	}
 
 	@Override
@@ -90,5 +94,21 @@ public class RestaurantService implements IRestaurantService {
 			return new SuccessResult("Add Restaurant Successful!");
 		}
 		else return new ErrorDataResult<>("Address Id is invalid!");
+	}
+
+	@Override
+	public Result addEvaluation(String content, int rateValue, Long restaurantId, Long userId) {
+		User user = this.userRepository.getUserById(userId);
+		Restaurant restaurant = this.restaurantRepo.getRestaurantById(restaurantId);
+		Evaluation evaluation = new Evaluation(null, content ,rateValue, user, restaurant);
+		if(user != null && restaurant != null) {
+			user.getEvaluations().add(evaluation);
+			this.userRepository.save(user);
+			restaurant.getEvaluations().add(evaluation);
+			this.restaurantRepo.save(restaurant);
+			this.evaluationRepository.save(evaluation);
+			return new SuccessResult("Save Successful!");
+		}
+		else return new ErrorResult("Error!");
 	}
 }

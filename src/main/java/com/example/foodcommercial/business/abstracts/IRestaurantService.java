@@ -25,5 +25,6 @@ public interface IRestaurantService {
 
 	public Result addCategory(Long restaurantId, Long categoryId);
 	public Result add(String name, Long addressId);
+	public Result addEvaluation(String content, int rateValue, Long restaurantId, Long userId);
 	
 }

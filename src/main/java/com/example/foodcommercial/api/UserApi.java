@@ -79,6 +79,13 @@ public class UserApi {
 		return this.userService.getUserAdresses(id);
 	}
 
+	@PostMapping("/addcard")
+	public Result addCardInformation(@Valid @RequestParam String endDate,
+								   @Valid @RequestParam String ccv, @Valid @RequestParam String cardNumber,
+								   @Valid @RequestParam String cardName, @RequestParam Long userId) {
+		return this.userService.addCard(endDate, ccv, cardNumber, cardName, userId);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions) {

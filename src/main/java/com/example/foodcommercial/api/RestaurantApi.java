@@ -69,6 +69,12 @@ public class RestaurantApi {
 		return this.restaurantService.add(name,addressId);
 	}
 
+	@PostMapping("/addEvaluation")
+	public Result addEvaluation(@RequestParam String content, @RequestParam int rateValue,
+								@RequestParam Long restaurantId,@RequestParam Long userId){
+		return this.restaurantService.addEvaluation(content,rateValue,restaurantId,userId);
+	}
+
 	@ExceptionHandler(ValidationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public String handleValidationException(ValidationException exceptions) {

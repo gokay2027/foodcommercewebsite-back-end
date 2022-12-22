@@ -3,6 +3,7 @@ package com.example.foodcommercial.business.concretes;
 import java.util.List;
 
 import com.example.foodcommercial.core.utilities.results.*;
+import com.example.foodcommercial.repositories.CardInformationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,15 @@ public class UserService implements IUserService {
 
 	private UserRepository userRepo;
 	private AddressRepository adressRepo;
+	private CardInformationRepository cardInfoRepo;
 
 	@Autowired
-	public UserService(UserRepository userRepo, AddressRepository adressRepo) {
+	public UserService(UserRepository userRepo, AddressRepository adressRepo,
+	CardInformationRepository cardInfoRepo) {
 
 		this.userRepo = userRepo;
 		this.adressRepo = adressRepo;
-
+		this.cardInfoRepo=cardInfoRepo;
 	}
 
 	@Override
@@ -48,11 +51,14 @@ public class UserService implements IUserService {
 
 	@Override
 	public Result addUserAdress(Long id, Address address) {
-		User user = this.userRepo.getReferenceById(id);
-		this.adressRepo.save(address);
-		user.getAddresses().add(address);
-		this.userRepo.save(user);
-		return new SuccessResult("Add Address Successful!");
+		User user = this.userRepo.getUserById(id);
+		if(user != null) {
+			user.getAddresses().add(address);
+			this.adressRepo.save(address);
+			this.userRepo.save(user);
+			return new SuccessResult("Add Address Successful!");
+		}
+		else return new ErrorResult("Error!");
 	}
 
 	@Override
@@ -72,8 +78,18 @@ public class UserService implements IUserService {
 		return new SuccessDataResult<List<Address>>
 				(this.userRepo.getReferenceById(id).getAddresses());
 	}
-	
-	
+
+	@Override
+	public Result addCard(String endDate, String ccv, String cardNumber, String cardName, Long userId) {
+		User user = this.userRepo.getUserById(userId);
+		if(user != null) {
+			CardInformation card = new CardInformation(null, endDate, ccv, cardNumber, cardName, user);
+			user.getCards().add(card);
+			this.userRepo.save(user);
+			return new SuccessResult("Add Card Successful!");
+		}
+		else return new ErrorResult("Error!");
+	}
 	
 	
 }

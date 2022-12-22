@@ -23,5 +23,8 @@ public interface IUserService {
 	DataResult<List<FavoriteRestaurants>> getFavoriteRestaurants(Long id);
 
 	DataResult<List<Address>> getUserAdresses(Long id);
-	
+
+	Result addCard(String endDate, String ccv, String cardNumber, String cardName, Long userId);
+
+
 }
