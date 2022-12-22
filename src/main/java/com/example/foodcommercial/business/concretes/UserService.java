@@ -41,7 +41,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public Result registerUser(String name, String surname, String email, String password, String phoneNumber, String birthDate) {
-		User user = new User(null,name,surname,email,password,phoneNumber,birthDate,null,null,null);
+		User user = new User(null,name,surname,email,password,phoneNumber,birthDate,null,null,null,null);
 		userRepo.save(user);
 		return new SuccessResult("Registration Successful!");
 	}

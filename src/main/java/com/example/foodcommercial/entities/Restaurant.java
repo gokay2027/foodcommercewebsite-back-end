@@ -48,8 +48,4 @@ public class Restaurant {
 			inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> category;
 
-	public void setCategory(Category category) {
-		this.category.add(category);
-	}
-
 }

@@ -32,7 +32,6 @@ public class Evaluation {
 	private String content;
 	
 	@Column
-	@NotBlank
 	@NotNull
 	private int rateValue;
 	
@@ -44,6 +43,6 @@ public class Evaluation {
 	@JoinColumn(nullable=false)
 	private Restaurant restaurant;
 	
-	
+
 	
 }

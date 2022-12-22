@@ -71,5 +71,9 @@ public class User {
 	@JsonBackReference
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<FavoriteRestaurants> favoriteRestaurants;
+
+	@JsonBackReference
+	@OneToMany(mappedBy = "user")
+	private List<Evaluation> evaluations;
 	
 }

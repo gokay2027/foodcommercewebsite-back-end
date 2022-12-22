@@ -66,7 +66,7 @@ public class RestaurantService implements IRestaurantService {
 		Category category = categoryRepository.getCategoryById(categoryId);
 		Restaurant restaurant = restaurantRepo.getRestaurantById(restaurantId);
 		if(category != null && restaurant != null){
-			restaurant.setCategory(category);
+			restaurant.getCategory().add(category);
 			restaurantRepo.save(restaurant);
 			return new SuccessResult("Add Category to Restaurant Successful!");
 		}
