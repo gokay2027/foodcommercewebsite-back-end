@@ -26,5 +26,7 @@ public interface IUserService {
 
 	Result addCard(String endDate, String ccv, String cardNumber, String cardName, Long userId);
 
+	Result passwordChange(Long userId, String oldPassword, String newPassword);
+
 
 }

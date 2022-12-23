@@ -19,18 +19,20 @@ public class RestaurantService implements IRestaurantService {
 	private CategoryRepository categoryRepository;
 	private EvaluationRepository evaluationRepository;
 	private UserRepository userRepository;
-	
+	private FoodRepository foodRepo;
+
 	@Autowired
 	public RestaurantService(RestaurantRepository restaurantRepo,
 							 AddressRepository addressRepository,
 							 CategoryRepository categoryRepository,
 							 EvaluationRepository evaluationRepository,
-							 UserRepository userRepository) {
+							 UserRepository userRepository,FoodRepository foodRepo) {
 		this.restaurantRepo=restaurantRepo;
 		this.addressRepository=addressRepository;
 		this.categoryRepository=categoryRepository;
 		this.evaluationRepository=evaluationRepository;
 		this.userRepository=userRepository;
+		this.foodRepo=foodRepo;
 	}
 
 	@Override
@@ -77,23 +79,23 @@ public class RestaurantService implements IRestaurantService {
 		else return new ErrorDataResult<>("Invalid input!");
 	}
 
-//	@Override
-//	public DataResult<List<Restaurant>> getRestaurantsByCategoryContainsIgnoreCase(String category) {
-//		List<Restaurant> restaurants =
-//				restaurantRepo.getRestaurantsByCategoryContainsIgnoreCase(category);
-//		if(restaurants != null)
-//			return new SuccessDataResult<>(restaurants, "Search Successful!");
-//		else return new ErrorDataResult<>("Search Not Found!");	}
+	@Override
+	public DataResult<List<Restaurant>> getRestaurantsByCategory(String categoryName) {
+		Category category = this.categoryRepository.getCategoryByNameContainsIgnoreCase(categoryName);
+		if(category!=null) {
+			List<Restaurant> restaurants = category.getRestaurants();
+			return new SuccessDataResult<List<Restaurant>>(restaurants, "Restaurants by Category");
+		}
+		else return new ErrorDataResult<>("Error!");
+	}
 
 	@Override
-	public Result add(String name, Long addressId) {
-		Address address = addressRepository.getAddressById(addressId);
-		if(address != null) {
-			Restaurant restaurant = new Restaurant(null, name, address, null, null, null);
-			this.restaurantRepo.save(restaurant);
-			return new SuccessResult("Add Restaurant Successful!");
-		}
-		else return new ErrorDataResult<>("Address Id is invalid!");
+	public Result add(String name, Address address) {
+		Address address2 = this.addressRepository.save(address);
+		Restaurant restaurant = new Restaurant(null, name, address2, null, null, null);
+		this.restaurantRepo.save(restaurant);
+		return new SuccessResult("Add Restaurant Successful!");
+
 	}
 
 	@Override
@@ -111,4 +113,15 @@ public class RestaurantService implements IRestaurantService {
 		}
 		else return new ErrorResult("Error!");
 	}
+
+	@Override
+	public DataResult<List<Category>> getAllCategories(Long restaurantId) {
+		Restaurant restaurant = this.restaurantRepo.getRestaurantById(restaurantId);
+		if(restaurant != null) {
+			List<Category> categories = restaurant.getCategory();
+			return new SuccessDataResult<>(categories, "Get All Categories Successful!");
+		}
+		else return new ErrorDataResult<>("Error!");
+	}
+
 }

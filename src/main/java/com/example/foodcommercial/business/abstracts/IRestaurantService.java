@@ -5,9 +5,7 @@ import java.util.Optional;
 
 import com.example.foodcommercial.core.utilities.results.DataResult;
 import com.example.foodcommercial.core.utilities.results.Result;
-import com.example.foodcommercial.entities.Evaluation;
-import com.example.foodcommercial.entities.Food;
-import com.example.foodcommercial.entities.Restaurant;
+import com.example.foodcommercial.entities.*;
 
 public interface IRestaurantService {
 	
@@ -21,10 +19,11 @@ public interface IRestaurantService {
 
 	public DataResult<List<Restaurant>> getRestaurantsByNameContainsIgnoreCase(String name);
 
-//	public DataResult<List<Restaurant>> getRestaurantsByCategoryContainsIgnoreCase(String category);
+	public DataResult<List<Restaurant>> getRestaurantsByCategory(String categoryName);
 
 	public Result addCategory(Long restaurantId, Long categoryId);
-	public Result add(String name, Long addressId);
+	public Result add(String name, Address address);
 	public Result addEvaluation(String content, int rateValue, Long restaurantId, Long userId);
+	public DataResult<List<Category>> getAllCategories(Long restaurantId);
 	
 }

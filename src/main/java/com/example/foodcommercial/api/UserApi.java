@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
+import com.example.foodcommercial.business.abstracts.IUserService;
 import com.example.foodcommercial.core.utilities.results.DataResult;
 import com.example.foodcommercial.core.utilities.results.ErrorDataResult;
 import com.example.foodcommercial.core.utilities.results.Result;
@@ -36,10 +37,10 @@ import com.example.foodcommercial.entities.User;
 @RequestMapping("/user")
 public class UserApi {
 
-	private UserService userService;
+	private IUserService userService;
 
 	@Autowired
-	public UserApi(UserService userService) {
+	public UserApi(IUserService userService) {
 		super();
 		this.userService = userService;
 	}
@@ -59,7 +60,7 @@ public class UserApi {
 	}
 
 	// User adds adress
-	@PostMapping(value = "/addadress/{id}")
+	@PutMapping(value = "/addadress/{id}")
 	public Result addUserAdress(@PathVariable(value = "id") Long id, @Valid @RequestBody Address address) {
 		return this.userService.addUserAdress(id, address);
 	}
@@ -84,6 +85,10 @@ public class UserApi {
 								   @Valid @RequestParam String ccv, @Valid @RequestParam String cardNumber,
 								   @Valid @RequestParam String cardName, @RequestParam Long userId) {
 		return this.userService.addCard(endDate, ccv, cardNumber, cardName, userId);
+	}
+	@PutMapping("/passwordChange")
+	public Result passwordChange(Long userId, String oldPassword, String newPassword){
+		return this.userService.passwordChange(userId,oldPassword,newPassword);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

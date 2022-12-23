@@ -3,7 +3,9 @@ package com.example.foodcommercial.api;
 import java.util.*;
 
 import com.example.foodcommercial.core.utilities.results.DataResult;
+import com.example.foodcommercial.core.utilities.results.ErrorDataResult;
 import com.example.foodcommercial.core.utilities.results.Result;
+import com.example.foodcommercial.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.foodcommercial.business.abstracts.IRestaurantService;
-import com.example.foodcommercial.entities.Evaluation;
-import com.example.foodcommercial.entities.Food;
-import com.example.foodcommercial.entities.Restaurant;
 
 import javax.validation.Valid;
 import javax.validation.ValidationException;
@@ -54,19 +53,19 @@ public class RestaurantApi {
 		return this.restaurantService.getRestaurantsByNameContainsIgnoreCase(name);
 	}
 
-//	@GetMapping("/restaurantbycategory")
-//	public DataResult<List<Restaurant>> getRestaurantsByCategoryContainsIgnoreCase(String category){
-//		return this.restaurantService.getRestaurantsByCategoryContainsIgnoreCase(category);
-//	}
+	@GetMapping("/getRestaurantsByCategory")
+	public DataResult<List<Restaurant>> getRestaurantsByCategory(String categoryName){
+		return this.restaurantService.getRestaurantsByCategory(categoryName);
+	}
 
-	@PostMapping("/addCategory")
+	@PutMapping("/addCategory")
 	public Result addCategory(Long restaurantId, Long categoryId){
 		return this.restaurantService.addCategory(restaurantId, categoryId);
 	}
 
 	@PostMapping("/add")
-	public Result add(@RequestParam String name, @RequestParam Long addressId){
-		return this.restaurantService.add(name,addressId);
+	public Result add(@RequestParam String name, @Valid @RequestBody Address address){
+		return this.restaurantService.add(name,address);
 	}
 
 	@PostMapping("/addEvaluation")
@@ -74,23 +73,30 @@ public class RestaurantApi {
 								@RequestParam Long restaurantId,@RequestParam Long userId){
 		return this.restaurantService.addEvaluation(content,rateValue,restaurantId,userId);
 	}
+	@GetMapping("/getAllCategories")
+	public DataResult<List<Category>> getAllCategories(Long restaurantId){
+		return this.restaurantService.getAllCategories(restaurantId);
+	}
 
 	@ExceptionHandler(ValidationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public String handleValidationException(ValidationException exceptions) {
+	public ErrorDataResult<Object> handleValidationException(ValidationException exceptions) {
 
-		return exceptions.getMessage();
+		ErrorDataResult<Object> errors =
+				new ErrorDataResult<Object>(exceptions.getMessage(), "Validation Errors!");
+		return errors;
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public Collection<String> handleValidationException(MethodArgumentNotValidException exceptions) {
+	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions) {
 		Map<String,String> validationErrors = new HashMap<String,String>();
 		for(FieldError fieldError : exceptions.getBindingResult().getFieldErrors()) {
 			validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
 		}
-
-		return validationErrors.values();
+		ErrorDataResult<Object> errors =
+				new ErrorDataResult<Object>(validationErrors, "Validation Errors!");
+		return errors;
 	}
 
 }

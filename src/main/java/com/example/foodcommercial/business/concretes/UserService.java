@@ -64,19 +64,19 @@ public class UserService implements IUserService {
 	@Override
 	public DataResult<List<CardInformation>> getCardsOfUser(Long id) {
 		return new SuccessDataResult<List<CardInformation>>
-				(this.userRepo.getReferenceById(id).getCards());
+				(this.userRepo.getUserById(id).getCards());
 	}
 
 	@Override
 	public DataResult<List<FavoriteRestaurants>> getFavoriteRestaurants(Long id) {
 		return new SuccessDataResult<List<FavoriteRestaurants>>
-				(this.userRepo.getReferenceById(id).getFavoriteRestaurants());
+				(this.userRepo.getUserById(id).getFavoriteRestaurants());
 	}
 
 	@Override
 	public DataResult<List<Address>> getUserAdresses(Long id) {
 		return new SuccessDataResult<List<Address>>
-				(this.userRepo.getReferenceById(id).getAddresses());
+				(this.userRepo.getUserById(id).getAddresses());
 	}
 
 	@Override
@@ -90,6 +90,17 @@ public class UserService implements IUserService {
 		}
 		else return new ErrorResult("Error!");
 	}
-	
-	
+
+	@Override
+	public Result passwordChange(Long userId, String oldPassword, String newPassword) {
+		User user = this.userRepo.getUserById(userId);
+		if(user.getPassword().equals(oldPassword)){
+			user.setPassword(newPassword);
+			this.userRepo.save(user);
+			return new SuccessResult("Password Change Successful!");
+		}
+		else return new ErrorResult("Please Enter Old Password Correctly!");
+	}
+
+
 }

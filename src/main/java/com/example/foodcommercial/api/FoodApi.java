@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.foodcommercial.core.utilities.results.DataResult;
+import com.example.foodcommercial.core.utilities.results.ErrorDataResult;
+import com.example.foodcommercial.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -29,32 +32,40 @@ public class FoodApi {
 	}
 
 	@GetMapping("/getall")
-	public List<Food> getAllFood() {
+	public DataResult<List<Food>> getAllFood() {
 		return this.foodService.getAllFood();
 	}
 
 	@PostMapping("/add")
-	public void add(@Valid @RequestParam String name, @RequestParam int price,
-					@RequestParam Long categoryId, @RequestParam Long restaurantId){
-		this.foodService.add(name, price, categoryId, restaurantId);
+	public Result add(@Valid @RequestParam String name, @RequestParam int price,
+					  @RequestParam Long categoryId, @RequestParam Long restaurantId){
+		return this.foodService.add(name, price, categoryId, restaurantId);
 	}
 
-	@ExceptionHandler(ValidationException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public String handleValidationException(ValidationException exceptions) {
-
-		return exceptions.getMessage();
+	@PutMapping("/addPortion")
+	public Result addPortion(Long foodId, Long portionId){
+		return this.foodService.addPortion(foodId,portionId);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public Collection<String> handleValidationException(MethodArgumentNotValidException exceptions) {
+	public ErrorDataResult<Object> handleValidationException(MethodArgumentNotValidException exceptions) {
 		Map<String,String> validationErrors = new HashMap<String,String>();
 		for(FieldError fieldError : exceptions.getBindingResult().getFieldErrors()) {
 			validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
 		}
+		ErrorDataResult<Object> errors =
+				new ErrorDataResult<Object>(validationErrors, "Validation Errors!");
+		return errors;
+	}
 
-		return validationErrors.values();
+	@ExceptionHandler(ValidationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ErrorDataResult<Object> handleValidationException(ValidationException exceptions) {
+
+		ErrorDataResult<Object> errors =
+				new ErrorDataResult<Object>(exceptions.getMessage(), "Validation Errors!");
+		return errors;
 	}
 
 }

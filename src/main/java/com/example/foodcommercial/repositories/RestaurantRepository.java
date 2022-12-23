@@ -12,6 +12,4 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
 	List<Restaurant> getRestaurantsByNameContainsIgnoreCase(String name);
 
-//	@Query("SELECT r FROM Restaurant r WHERE  r.category =: category")
-//	List<Restaurant> getRestaurantsByCategoryContainsIgnoreCase(String category);
 }
