@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ import com.example.foodcommercial.entities.User;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class UserApi {
 
 	private IUserService userService;
@@ -46,9 +48,9 @@ public class UserApi {
 	}
 
 	// User login
-	@GetMapping("/{email}/{password}")
-	public DataResult<User> logginUser(@PathVariable(value = "email") String email,
-									   @PathVariable(value = "password") String password) {
+	@GetMapping("/login")
+	public DataResult<User> logginUser(@RequestParam(value = "email") String email,
+									   @RequestParam(value = "password") String password) {
 		return this.userService.loginUser(email, password);
 	}
 

@@ -17,6 +17,8 @@ import com.example.foodcommercial.business.abstracts.IRestaurantService;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
+
+@CrossOrigin
 @RestController
 @RequestMapping("/restaurant")
 public class RestaurantApi {

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import ch.qos.logback.classic.db.names.ColumnName;
+
 import javax.persistence.*;
 
 import javax.validation.constraints.NotBlank;
@@ -46,6 +48,6 @@ public class Restaurant {
 	@JoinTable(name = "restaurant_category",
 			joinColumns = @JoinColumn(name = "restaurant_id"),
 			inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private List<Category> category;
+	private List<Category> category;	
 
 }
