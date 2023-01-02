@@ -62,18 +62,18 @@ public class UserApi {
 	}
 
 	// User adds adress
-	@PutMapping(value = "/addadress/{id}")
-	public Result addUserAdress(@PathVariable(value = "id") Long id, @Valid @RequestBody Address address) {
+	@PutMapping(value = "/addadress")
+	public Result addUserAdress(@RequestParam(value = "id") Long id, @Valid @RequestBody Address address) {
 		return this.userService.addUserAdress(id, address);
 	}
 
-	@GetMapping("/getcards/{id}")
-	public DataResult<List<CardInformation>> getCardsOfUser(@PathVariable(value = "id") Long id) {
+	@GetMapping("/getcards")
+	public DataResult<List<CardInformation>> getCardsOfUser(@RequestParam Long id) {
 		return this.userService.getCardsOfUser(id);
 	}
 
-	@GetMapping("/getfavoriterestaurants/{id}")
-	public DataResult<List<FavoriteRestaurants>> getFavoriteRestaurantsByUserId(@PathVariable(value = "id") Long id) {
+	@GetMapping("/getfavoriterestaurants")
+	public DataResult<List<FavoriteRestaurants>> getFavoriteRestaurantsByUserId(@RequestParam Long id) {
 		return this.userService.getFavoriteRestaurants(id);
 	}
 
