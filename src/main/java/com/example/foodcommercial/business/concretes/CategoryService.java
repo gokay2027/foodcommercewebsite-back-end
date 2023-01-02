@@ -32,5 +32,15 @@ public class CategoryService implements ICategoryService {
         return new SuccessDataResult<>(this.categoryRepo.findAll());
     }
 
+    @Override
+    public Result delete(Long id) {
+        Category category = this.categoryRepo.getCategoryById(id);
+        if(category!=null){
+            this.categoryRepo.delete(category);
+            return new SuccessResult("Deleted Successfully!");
+        }
+        else return new ErrorResult("Error!");
+    }
+
 
 }

@@ -11,5 +11,5 @@ import java.util.List;
 public interface ICategoryService {
     Result add(String name);
     DataResult<List<Category>> getAllCategories();
-
+    Result delete(Long id);
 }

@@ -53,4 +53,14 @@ public class FavoriteRestaurantService implements IFavoriteRestaurantService {
 		}
 		else return new ErrorDataResult<>("Error!");
 	}
+
+	@Override
+	public Result delete(Long id) {
+		FavoriteRestaurants restaurant = this.favoriteRestaurantRepo.getFavoriteRestaurantsById(id);
+		if(restaurant!=null){
+			this.favoriteRestaurantRepo.delete(restaurant);
+			return new SuccessResult("Deleted Successfully!");
+		}
+		else return new ErrorResult("Error!");
+	}
 }

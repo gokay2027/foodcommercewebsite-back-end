@@ -59,7 +59,7 @@ public class User {
 	@Column
 	private String birthDate;
 	
-	@ManyToMany(cascade = CascadeType.DETACH)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinColumn
 	private List<Address> addresses;
 	
@@ -73,7 +73,7 @@ public class User {
 	private List<FavoriteRestaurants> favoriteRestaurants;
 
 	@JsonBackReference
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Evaluation> evaluations;
 	
 }

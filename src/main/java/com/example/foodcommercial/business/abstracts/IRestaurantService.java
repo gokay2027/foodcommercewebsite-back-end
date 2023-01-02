@@ -22,8 +22,10 @@ public interface IRestaurantService {
 	public DataResult<List<Restaurant>> getRestaurantsByCategory(String categoryName);
 
 	public Result addCategory(Long restaurantId, Long categoryId);
-	public Result add(String name, Address address);
+	public Result add(String name, String streetNo,
+					  String hoodName, String buildingNumber, String district, String city);
 	public Result addEvaluation(String content, int rateValue, Long restaurantId, Long userId);
 	public DataResult<List<Category>> getAllCategories(Long restaurantId);
+	public Result delete(Long id);
 	
 }

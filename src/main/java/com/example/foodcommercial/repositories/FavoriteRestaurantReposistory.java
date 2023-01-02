@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface FavoriteRestaurantReposistory extends JpaRepository<FavoriteRestaurants, Long> {
     List<FavoriteRestaurants> getFavoriteRestaurantsByUser(User user);
+    FavoriteRestaurants getFavoriteRestaurantsById(Long id);
 
 }

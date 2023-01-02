@@ -31,16 +31,16 @@ public class Restaurant {
 	@NotNull
 	private String name;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn
 	private Address address;
 		
 	@JsonBackReference
-	@OneToMany(mappedBy = "restaurant")
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
 	private List<Food> foods;
 	
 	@JsonBackReference
-	@OneToMany(mappedBy = "restaurant")
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
 	private List<Evaluation> evaluations;
 
 	@JsonBackReference

@@ -16,7 +16,8 @@ public interface IUserService {
 	
 	Result registerUser(String name, String surname, String email, String password, String phoneNumber, String birthDate);
 	
-	Result addUserAdress(Long id, Address address);
+	Result addUserAdress(Long id, String streetNo,
+						 String hoodName, String buildingNumber, String district, String city);
 	
 	DataResult<List<CardInformation>> getCardsOfUser(Long id);
 	
@@ -29,6 +30,7 @@ public interface IUserService {
 	Result passwordChange(Long userId, String oldPassword, String newPassword);
 
 	DataResult<User> getUserById(Long userId);
+	Result delete(Long id);
 
 	
 }

@@ -78,5 +78,15 @@ public class FoodService implements IFoodService {
 		else return new ErrorResult("Error!");
 	}
 
+	@Override
+	public Result delete(Long id) {
+		Food food = this.foodRepo.getFoodById(id);
+		if(food!=null){
+			this.foodRepo.delete(food);
+			return new SuccessResult("Deleted Successfully!");
+		}
+		else return new ErrorResult("Error!");
+	}
+
 
 }

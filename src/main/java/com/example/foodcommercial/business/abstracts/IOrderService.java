@@ -9,7 +9,6 @@ import com.example.foodcommercial.entities.Order;
 public interface IOrderService {
 	
 	DataResult<List<Order>> getAllOrdersByUserId(Long userId);
-	
 	Result giveOrder(Long foodId, Long paymentId, Long userId, Long userAdressId);
 	
 }

@@ -29,13 +29,17 @@ public class CategoryApi {
     }
 
     @PostMapping("/add")
-    public Result add(String name){
+    public Result add(@RequestParam String name){
         return this.categoryService.add(name);
     }
 
     @GetMapping("/getAll")
     public DataResult<List<Category>> getAllCategories(){
         return this.categoryService.getAllCategories();
+    }
+    @DeleteMapping("/delete")
+    public Result delete(@RequestParam Long id){
+        return this.categoryService.delete(id);
     }
 
     @ExceptionHandler(ValidationException.class)

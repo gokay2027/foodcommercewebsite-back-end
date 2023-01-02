@@ -38,6 +38,10 @@ public class FavoriteRestaurantApi {
 	public DataResult<List<FavoriteRestaurants>> getAllFavoriteRestaurantsByUserId(@RequestParam Long userId){
 		return this.favoriteRestaurnatService.getAllFavoriteRestaurantsByUserId(userId);
 	}
+	@DeleteMapping("/delete")
+	public Result delete(Long id){
+		return this.favoriteRestaurnatService.delete(id);
+	}
 
 	@ExceptionHandler(ValidationException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

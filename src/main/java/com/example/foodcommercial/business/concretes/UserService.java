@@ -50,9 +50,11 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public Result addUserAdress(Long id, Address address) {
+	public Result addUserAdress(Long id, String streetNo,
+								String hoodName, String buildingNumber, String district, String city) {
 		User user = this.userRepo.getUserById(id);
 		if(user != null) {
+			Address address = new Address(null,streetNo,hoodName,buildingNumber,district,city);
 			user.getAddresses().add(address);
 			this.adressRepo.save(address);
 			this.userRepo.save(user);
@@ -107,6 +109,16 @@ public class UserService implements IUserService {
 		User user = this.userRepo.getUserById(userId);
 		if(user!=null) return new SuccessDataResult<>(user, "User");
 		else return new ErrorDataResult<>("Error!");
+	}
+
+	@Override
+	public Result delete(Long id) {
+		User user = this.userRepo.getUserById(id);
+		if(user!=null){
+			this.userRepo.delete(user);
+			return new SuccessResult("Deleted Successfully!");
+		}
+		else return new ErrorResult("Error!");
 	}
 
 

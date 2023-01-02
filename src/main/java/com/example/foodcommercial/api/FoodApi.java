@@ -44,8 +44,13 @@ public class FoodApi {
 	}
 
 	@PutMapping("/addPortion")
-	public Result addPortion(Long foodId, Long portionId){
+	public Result addPortion(@RequestParam Long foodId, @RequestParam Long portionId){
 		return this.foodService.addPortion(foodId,portionId);
+	}
+
+	@DeleteMapping("/delete")
+	public Result delete(@RequestParam Long id){
+		return this.foodService.delete(id);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

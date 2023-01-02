@@ -66,8 +66,11 @@ public class RestaurantApi {
 	}
 
 	@PostMapping("/add")
-	public Result add(@RequestParam String name, @Valid @RequestBody Address address){
-		return this.restaurantService.add(name,address);
+	public Result add(@RequestParam String name,@RequestParam String streetNo,
+					  @RequestParam String hoodName,@RequestParam String buildingNumber,
+					  @RequestParam String district,@RequestParam String city){
+		return this.restaurantService.add(name,streetNo,
+				hoodName,buildingNumber,district,city);
 	}
 
 	@PostMapping("/addEvaluation")
@@ -76,8 +79,12 @@ public class RestaurantApi {
 		return this.restaurantService.addEvaluation(content,rateValue,restaurantId,userId);
 	}
 	@GetMapping("/getAllCategories")
-	public DataResult<List<Category>> getAllCategories(Long restaurantId){
+	public DataResult<List<Category>> getAllCategories(@RequestParam Long restaurantId){
 		return this.restaurantService.getAllCategories(restaurantId);
+	}
+	@DeleteMapping("/delete")
+	public Result delete(@RequestParam Long id){
+		return this.restaurantService.delete(id);
 	}
 
 	@ExceptionHandler(ValidationException.class)

@@ -20,19 +20,22 @@ public class RestaurantService implements IRestaurantService {
 	private EvaluationRepository evaluationRepository;
 	private UserRepository userRepository;
 	private FoodRepository foodRepo;
+	private FavoriteRestaurantReposistory favoriteRestaurantRepo;
 
 	@Autowired
 	public RestaurantService(RestaurantRepository restaurantRepo,
 							 AddressRepository addressRepository,
 							 CategoryRepository categoryRepository,
 							 EvaluationRepository evaluationRepository,
-							 UserRepository userRepository,FoodRepository foodRepo) {
+							 UserRepository userRepository,FoodRepository foodRepo,
+							 FavoriteRestaurantReposistory favoriteRestaurantRepo) {
 		this.restaurantRepo=restaurantRepo;
 		this.addressRepository=addressRepository;
 		this.categoryRepository=categoryRepository;
 		this.evaluationRepository=evaluationRepository;
 		this.userRepository=userRepository;
 		this.foodRepo=foodRepo;
+		this.favoriteRestaurantRepo=favoriteRestaurantRepo;
 	}
 
 	@Override
@@ -90,7 +93,9 @@ public class RestaurantService implements IRestaurantService {
 	}
 
 	@Override
-	public Result add(String name, Address address) {
+	public Result add(String name, String streetNo,
+					  String hoodName, String buildingNumber, String district, String city) {
+		Address address = new Address(null,streetNo,hoodName,buildingNumber,district,city);
 		Address address2 = this.addressRepository.save(address);
 		Restaurant restaurant = new Restaurant(null, name, address2, null, null, null);
 		this.restaurantRepo.save(restaurant);
@@ -107,8 +112,6 @@ public class RestaurantService implements IRestaurantService {
 			user.getEvaluations().add(evaluation);
 			this.userRepository.save(user);
 			restaurant.getEvaluations().add(evaluation);
-			this.restaurantRepo.save(restaurant);
-			this.evaluationRepository.save(evaluation);
 			return new SuccessResult("Save Successful!");
 		}
 		else return new ErrorResult("Error!");
@@ -122,6 +125,22 @@ public class RestaurantService implements IRestaurantService {
 			return new SuccessDataResult<>(categories, "Get All Categories Successful!");
 		}
 		else return new ErrorDataResult<>("Error!");
+	}
+
+	@Override
+	public Result delete(Long id) {
+		Restaurant restaurant = this.restaurantRepo.getRestaurantById(id);
+		if(restaurant!=null){
+			List<FavoriteRestaurants> favs = this.favoriteRestaurantRepo.findAll();
+			for(FavoriteRestaurants favoriteRestaurant : favs){
+				if(favoriteRestaurant.getRestaurant()==restaurant){
+					this.favoriteRestaurantRepo.delete(favoriteRestaurant);
+				}
+			}
+			this.restaurantRepo.delete(restaurant);
+			return new SuccessResult("Deleted Successfully!");
+		}
+		else return new ErrorResult("Error!");
 	}
 
 }

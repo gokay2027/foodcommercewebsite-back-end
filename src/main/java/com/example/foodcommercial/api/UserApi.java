@@ -16,17 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.foodcommercial.business.concretes.UserService;
 import com.example.foodcommercial.entities.Address;
@@ -63,8 +53,11 @@ public class UserApi {
 
 	// User adds adress
 	@PutMapping(value = "/addadress")
-	public Result addUserAdress(@RequestParam(value = "id") Long id, @Valid @RequestBody Address address) {
-		return this.userService.addUserAdress(id, address);
+	public Result addUserAdress(@RequestParam(value = "id") Long id, @RequestParam String streetNo,
+								@RequestParam String hoodName,@RequestParam String buildingNumber,
+								@RequestParam String district,@RequestParam String city) {
+		return this.userService.addUserAdress(id,streetNo,
+				hoodName,buildingNumber,district,city);
 	}
 
 	@GetMapping("/getcards")
@@ -92,9 +85,13 @@ public class UserApi {
 	public Result passwordChange(Long userId, String oldPassword, String newPassword){
 		return this.userService.passwordChange(userId,oldPassword,newPassword);
 	}
-	@GetMapping("/getUserById")
-	public DataResult<User> getUserById(@RequestParam Long userId){
-		return this.userService.getUserById(userId);
+	@GetMapping("/getuserbyid")
+	public DataResult<User> getUserById(@RequestParam Long id){
+		return this.userService.getUserById(id);
+	}
+	@DeleteMapping("/delete")
+	public Result delete(@RequestParam Long id){
+		return this.userService.delete(id);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

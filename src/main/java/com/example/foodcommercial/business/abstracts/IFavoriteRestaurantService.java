@@ -10,8 +10,7 @@ import java.util.List;
 public interface IFavoriteRestaurantService {
 	
 	Result addFavoriteRestaurant(Long userid, Long favoriteRestaurantId);
-
 	DataResult<List<FavoriteRestaurants>> getAllFavoriteRestaurantsByUserId(Long id);
-	
+	Result delete(Long id);
 
 }
