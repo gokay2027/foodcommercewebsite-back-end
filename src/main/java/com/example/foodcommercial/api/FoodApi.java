@@ -20,6 +20,7 @@ import com.example.foodcommercial.entities.Food;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/food")
 public class FoodApi {

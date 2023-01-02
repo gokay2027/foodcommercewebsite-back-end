@@ -16,7 +16,7 @@ import com.example.foodcommercial.entities.Order;
 
 import javax.validation.ValidationException;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/order")
 public class OrderApi {

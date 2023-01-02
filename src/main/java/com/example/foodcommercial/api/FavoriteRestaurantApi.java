@@ -13,6 +13,7 @@ import javax.validation.ValidationException;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/favoriterestaurants")
 public class FavoriteRestaurantApi {
