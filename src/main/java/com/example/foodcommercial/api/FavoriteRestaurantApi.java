@@ -1,6 +1,9 @@
 package com.example.foodcommercial.api;
 
+import com.example.foodcommercial.core.utilities.results.DataResult;
 import com.example.foodcommercial.core.utilities.results.ErrorDataResult;
+import com.example.foodcommercial.core.utilities.results.Result;
+import com.example.foodcommercial.entities.FavoriteRestaurants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -11,6 +14,7 @@ import com.example.foodcommercial.business.abstracts.IFavoriteRestaurantService;
 
 import javax.validation.ValidationException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin
@@ -27,8 +31,12 @@ public class FavoriteRestaurantApi {
 	
 	
 	@PostMapping("/addfavoriterestaurant/{userid}/{restaurantid}")
-	public void addFavoriteRestaurant(@PathVariable(value="userid") Long userid,@PathVariable(value="restaurantid") Long restaurantid) {
-		this.favoriteRestaurnatService.addFavoriteRestaurant(userid, restaurantid);
+	public Result addFavoriteRestaurant(@PathVariable(value="userid") Long userid, @PathVariable(value="restaurantid") Long restaurantid) {
+		return this.favoriteRestaurnatService.addFavoriteRestaurant(userid, restaurantid);
+	}
+	@GetMapping("/getAllFavoriteRestaurantsByUserId")
+	public DataResult<List<FavoriteRestaurants>> getAllFavoriteRestaurantsByUserId(@RequestParam Long userId){
+		return this.favoriteRestaurnatService.getAllFavoriteRestaurantsByUserId(userId);
 	}
 
 	@ExceptionHandler(ValidationException.class)

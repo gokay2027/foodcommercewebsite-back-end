@@ -39,7 +39,6 @@ public class Order {
 	
 	@ManyToOne
 	@JoinColumn
-	//give order methodunda restaurant yok
 	private Restaurant restaurant;
 	
 	

@@ -1,5 +1,6 @@
 package com.example.foodcommercial.business.concretes;
 
+import com.example.foodcommercial.core.utilities.results.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import com.example.foodcommercial.entities.User;
 import com.example.foodcommercial.repositories.FavoriteRestaurantReposistory;
 import com.example.foodcommercial.repositories.RestaurantRepository;
 import com.example.foodcommercial.repositories.UserRepository;
+
+import java.util.List;
 
 @Service
 public class FavoriteRestaurantService implements IFavoriteRestaurantService {
@@ -28,16 +31,26 @@ public class FavoriteRestaurantService implements IFavoriteRestaurantService {
 	}
 
 	@Override
-	public void addFavoriteRestaurant(Long userid, Long favoriteRestaurantId) {
-		// TODO Auto-generated method stub
+	public Result addFavoriteRestaurant(Long userid, Long favoriteRestaurantId) {
 
-		Restaurant restaurant = this.restaurantRepo.findById(favoriteRestaurantId).get();
+		Restaurant restaurant = this.restaurantRepo.getRestaurantById(favoriteRestaurantId);
+		User user = this.userRepo.getUserById(userid);
+		if(restaurant != null && user != null) {
+			FavoriteRestaurants favoriteRestaurant = new FavoriteRestaurants(null, restaurant, user);
 
-		User user = this.userRepo.findById(userid).get();
+			this.favoriteRestaurantRepo.save(favoriteRestaurant);
+			return new SuccessResult("Add Restaurant to Favorite Successful!");
+		}
+		else return new ErrorResult("Error!");
+	}
 
-		FavoriteRestaurants favoriteRestaurant = new FavoriteRestaurants(null, restaurant, user);
-
-		this.favoriteRestaurantRepo.save(favoriteRestaurant);
-
+	@Override
+	public DataResult<List<FavoriteRestaurants>> getAllFavoriteRestaurantsByUserId(Long id) {
+		User user = this.userRepo.getUserById(id);
+		if(user != null){
+			return new SuccessDataResult<List<FavoriteRestaurants>>
+					(this.favoriteRestaurantRepo.getFavoriteRestaurantsByUser(user), "Favorite Restaurants");
+		}
+		else return new ErrorDataResult<>("Error!");
 	}
 }

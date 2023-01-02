@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.foodcommercial.core.utilities.results.DataResult;
 import com.example.foodcommercial.core.utilities.results.ErrorDataResult;
+import com.example.foodcommercial.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -30,18 +32,17 @@ public class OrderApi {
 	
 	
 	@GetMapping(value="/allorders")
-	public List<Order> getAllOrders(){
-		return this.orderService.getAllOrders();
+	public DataResult<List<Order>> getAllOrdersByUserId(@RequestParam Long userId){
+		return this.orderService.getAllOrdersByUserId(userId);
 	}
 	
 	@PostMapping(value = "/neworder")
-	public void addOrder(@RequestParam Long foodId,
-			@RequestParam Long paymentId,
-			@RequestParam Long userId,
-			@RequestParam Long userAdressId) {
+	public Result addOrder(@RequestParam Long foodId,
+						   @RequestParam Long paymentId,
+						   @RequestParam Long userId,
+						   @RequestParam Long userAdressId) {
 		
-		this.orderService.giveOrder(foodId,paymentId,userId,userAdressId);
-	
+		return this.orderService.giveOrder(foodId,paymentId,userId,userAdressId);
 	}
 
 	@ExceptionHandler(ValidationException.class)

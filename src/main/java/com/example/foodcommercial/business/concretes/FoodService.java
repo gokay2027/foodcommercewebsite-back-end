@@ -17,6 +17,10 @@ import com.example.foodcommercial.business.abstracts.IFoodService;
 import com.example.foodcommercial.entities.Food;
 import com.example.foodcommercial.repositories.FoodRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
+
 @Service
 public class FoodService implements IFoodService {
 
@@ -24,6 +28,9 @@ public class FoodService implements IFoodService {
 	private CategoryRepository categoryRepo;
 	private RestaurantRepository restaurantRepo;
 	private PortionRepository portionRepo;
+
+	@PersistenceUnit
+	EntityManagerFactory emf;
 	
 	@Autowired
 	public FoodService(FoodRepository foodRepo, CategoryRepository categoryRepo,
@@ -47,9 +54,13 @@ public class FoodService implements IFoodService {
 		Restaurant restaurant = this.restaurantRepo.getRestaurantById(restaurantId);
 
 		if(category != null && restaurant != null) {
+			EntityManager em = emf.createEntityManager();
 			Food food = new Food(null, name, price, category, null, restaurant);
+			//Start Transaction
+			em.getTransaction().begin();
 			restaurant.getFoods().add(food);
-			this.foodRepo.save(food);
+			em.persist(food);
+			em.getTransaction().commit();
 			return new SuccessResult("Add Food Successful!");
 		}
 		else return new ErrorResult("Error!");

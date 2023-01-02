@@ -2,12 +2,14 @@ package com.example.foodcommercial.business.abstracts;
 
 import java.util.List;
 
+import com.example.foodcommercial.core.utilities.results.DataResult;
+import com.example.foodcommercial.core.utilities.results.Result;
 import com.example.foodcommercial.entities.Order;
 
 public interface IOrderService {
 	
-	List<Order> getAllOrders();
+	DataResult<List<Order>> getAllOrdersByUserId(Long userId);
 	
-	void giveOrder(Long foodId, Long paymentId,Long userId,Long userAdressId);
+	Result giveOrder(Long foodId, Long paymentId, Long userId, Long userAdressId);
 	
 }
