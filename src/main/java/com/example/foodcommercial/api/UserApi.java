@@ -82,8 +82,17 @@ public class UserApi {
 		return this.userService.addCard(endDate, ccv, cardNumber, cardName, userId);
 	}
 	@PutMapping("/passwordChange")
-	public Result passwordChange(Long userId, String oldPassword, String newPassword){
+	public Result passwordChange(@RequestParam Long userId,@RequestParam String oldPassword,
+								 @RequestParam String newPassword){
 		return this.userService.passwordChange(userId,oldPassword,newPassword);
+	}
+	@PutMapping("/nameChange")
+	public Result nameChange(@RequestParam Long userId,@RequestParam String newName){
+		return this.userService.nameChange(userId, newName);
+	}
+	@PutMapping("/surnameChange")
+	public Result surnameChange(@RequestParam Long userId,@RequestParam String newSurname){
+		return this.userService.surnameChange(userId,newSurname);
 	}
 	@GetMapping("/getuserbyid")
 	public DataResult<User> getUserById(@RequestParam Long id){
@@ -92,6 +101,14 @@ public class UserApi {
 	@DeleteMapping("/delete")
 	public Result delete(@RequestParam Long id){
 		return this.userService.delete(id);
+	}
+	@DeleteMapping("/deleteCard")
+	public Result deleteCard(@RequestParam Long userId,@RequestParam Long cardId){
+		return this.userService.deleteCard(userId,cardId);
+	}
+	@DeleteMapping("/deleteAddress")
+	public Result deleteAddress(@RequestParam Long userId,@RequestParam Long addressId){
+		return this.userService.deleteAddress(userId,addressId);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

@@ -15,12 +15,19 @@ import com.example.foodcommercial.entities.User;
 import com.example.foodcommercial.repositories.AddressRepository;
 import com.example.foodcommercial.repositories.UserRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceUnit;
+
 @Service
 public class UserService implements IUserService {
 
 	private UserRepository userRepo;
 	private AddressRepository adressRepo;
 	private CardInformationRepository cardInfoRepo;
+	@PersistenceUnit
+	EntityManagerFactory emf;
 
 	@Autowired
 	public UserService(UserRepository userRepo, AddressRepository adressRepo,
@@ -96,12 +103,34 @@ public class UserService implements IUserService {
 	@Override
 	public Result passwordChange(Long userId, String oldPassword, String newPassword) {
 		User user = this.userRepo.getUserById(userId);
-		if(user.getPassword().equals(oldPassword)){
+		if(user!=null && user.getPassword().equals(oldPassword)){
 			user.setPassword(newPassword);
 			this.userRepo.save(user);
 			return new SuccessResult("Password Change Successful!");
 		}
 		else return new ErrorResult("Please Enter Old Password Correctly!");
+	}
+
+	@Override
+	public Result nameChange(Long userId, String newName) {
+		User user = this.userRepo.getUserById(userId);
+		if(user!=null) {
+			user.setName(newName);
+			this.userRepo.save(user);
+			return new SuccessResult("Name Change Successful!");
+		}
+		else return new ErrorResult("Error!");
+	}
+
+	@Override
+	public Result surnameChange(Long userId, String newSurname) {
+		User user = this.userRepo.getUserById(userId);
+		if(user!=null) {
+			user.setSurname(newSurname);
+			this.userRepo.save(user);
+			return new SuccessResult("Name Change Successful!");
+		}
+		else return new ErrorResult("Error!");
 	}
 
 	@Override
@@ -119,6 +148,71 @@ public class UserService implements IUserService {
 			return new SuccessResult("Deleted Successfully!");
 		}
 		else return new ErrorResult("Error!");
+	}
+
+	@Override
+	public Result deleteCard(Long userId, Long cardId) {
+
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		User user = this.userRepo.getUserById(userId);
+		CardInformation cardInformation = this.cardInfoRepo.getCardInformationById(cardId);
+		if(user!=null && cardInformation!=null) {
+
+			try {
+				tx.begin();
+
+				// perform database operations here
+
+				user.getCards().remove(cardInformation);
+				this.cardInfoRepo.deleteById(cardId);
+				this.userRepo.save(user);
+
+
+				tx.commit();
+			} catch (Exception e) {
+				if (tx.isActive()) {
+					tx.rollback();
+				}
+			} finally {
+				em.close();
+			}
+			return new SuccessResult("Delete Card Successfully!");
+		}
+
+		return new ErrorResult("Error!");
+	}
+
+	@Override
+	public Result deleteAddress(Long userId, Long addressId) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		User user = this.userRepo.getUserById(userId);
+		Address address = this.adressRepo.getAddressById(addressId);
+		if(user!=null && address!=null) {
+
+			try {
+				tx.begin();
+
+				// perform database operations here
+
+				user.getAddresses().remove(address);
+				this.adressRepo.deleteById(addressId);
+				this.userRepo.save(user);
+
+
+				tx.commit();
+			} catch (Exception e) {
+				if (tx.isActive()) {
+					tx.rollback();
+				}
+			} finally {
+				em.close();
+			}
+			return new SuccessResult("Delete Address Successfully!");
+		}
+
+		return new ErrorResult("Error!");
 	}
 
 

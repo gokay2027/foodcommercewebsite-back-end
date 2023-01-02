@@ -28,9 +28,11 @@ public interface IUserService {
 	Result addCard(String endDate, String ccv, String cardNumber, String cardName, Long userId);
 
 	Result passwordChange(Long userId, String oldPassword, String newPassword);
-
+	Result nameChange(Long userId, String newName);
+	Result surnameChange(Long userId, String newSurname);
 	DataResult<User> getUserById(Long userId);
 	Result delete(Long id);
-
+	Result deleteCard(Long userId, Long cardId);
+	Result deleteAddress(Long userId, Long addressId);
 	
 }
