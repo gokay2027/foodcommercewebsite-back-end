@@ -92,6 +92,10 @@ public class UserApi {
 	public Result passwordChange(Long userId, String oldPassword, String newPassword){
 		return this.userService.passwordChange(userId,oldPassword,newPassword);
 	}
+	@GetMapping("/getUserById")
+	public DataResult<User> getUserById(@RequestParam Long userId){
+		return this.userService.getUserById(userId);
+	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)

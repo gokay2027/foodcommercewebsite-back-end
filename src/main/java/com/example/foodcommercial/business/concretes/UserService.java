@@ -102,5 +102,12 @@ public class UserService implements IUserService {
 		else return new ErrorResult("Please Enter Old Password Correctly!");
 	}
 
+	@Override
+	public DataResult<User> getUserById(Long userId) {
+		User user = this.userRepo.getUserById(userId);
+		if(user!=null) return new SuccessDataResult<>(user, "User");
+		else return new ErrorDataResult<>("Error!");
+	}
+
 
 }

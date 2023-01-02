@@ -28,5 +28,7 @@ public interface IUserService {
 
 	Result passwordChange(Long userId, String oldPassword, String newPassword);
 
+	DataResult<User> getUserById(Long userId);
+
 	
 }
