@@ -10,7 +10,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class PortionApi {
     }
 
     @PostMapping("/addPortion")
-    public Result add(String name){
+    public Result add(@RequestParam String name){
         return portionService.add(name);
     }
 

@@ -35,33 +35,33 @@ public class RestaurantApi {
 		return restaurantService.getAllRestaurants();
 	}
 
-	@GetMapping("/{id}")
-	public DataResult<Restaurant> getRestaurantById(@PathVariable(name = "id") Long id) {
+	@GetMapping("/restaurantById")
+	public DataResult<Restaurant> getRestaurantById(@RequestParam Long id) {
 		return restaurantService.getRestaurantById(id);
 	}
 
-	@GetMapping("restaurantmenu/{id}")
-	public DataResult<List<Food>> getRestaurantMenuById(@PathVariable(name = "id") Long id) {
+	@GetMapping("/restaurantmenu")
+	public DataResult<List<Food>> getRestaurantMenuById(@RequestParam Long id) {
 		return restaurantService.getFoodListByRestaurantId(id);
 	}
 	
-	@GetMapping("/restaurantevaluation/{id}")
-	public DataResult<List<Evaluation>> getEvaluationByRestaurantId(@PathVariable(name = "id") Long id) {
+	@GetMapping("/restaurantevaluation")
+	public DataResult<List<Evaluation>> getEvaluationByRestaurantId(@RequestParam Long id) {
 		return this.restaurantService.getEvaluationsByRestaurantId(id);
 	}
 
 	@GetMapping("/restaurantbyname")
-	public DataResult<List<Restaurant>> getRestaurantsByNameContainsIgnoreCase(String name){
+	public DataResult<List<Restaurant>> getRestaurantsByNameContainsIgnoreCase(@RequestParam String name){
 		return this.restaurantService.getRestaurantsByNameContainsIgnoreCase(name);
 	}
 
 	@GetMapping("/getRestaurantsByCategory")
-	public DataResult<List<Restaurant>> getRestaurantsByCategory(String categoryName){
+	public DataResult<List<Restaurant>> getRestaurantsByCategory(@RequestParam String categoryName){
 		return this.restaurantService.getRestaurantsByCategory(categoryName);
 	}
 
 	@PutMapping("/addCategory")
-	public Result addCategory(Long restaurantId, Long categoryId){
+	public Result addCategory(@RequestParam Long restaurantId,@RequestParam Long categoryId){
 		return this.restaurantService.addCategory(restaurantId, categoryId);
 	}
 

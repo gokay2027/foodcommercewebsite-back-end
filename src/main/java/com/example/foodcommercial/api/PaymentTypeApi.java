@@ -5,11 +5,7 @@ import com.example.foodcommercial.core.utilities.results.DataResult;
 import com.example.foodcommercial.core.utilities.results.Result;
 import com.example.foodcommercial.entities.PaymentType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +20,7 @@ public class PaymentTypeApi {
         this.paymentTypeService = paymentTypeService;
     }
     @PostMapping("/add")
-    public Result add(String name){
+    public Result add(@RequestParam String name){
         return this.paymentTypeService.add(name);
     }
     @GetMapping("/getAll")

@@ -5,7 +5,6 @@ import com.example.foodcommercial.core.utilities.results.DataResult;
 import com.example.foodcommercial.core.utilities.results.ErrorDataResult;
 import com.example.foodcommercial.core.utilities.results.Result;
 import com.example.foodcommercial.entities.Category;
-import com.example.foodcommercial.entities.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

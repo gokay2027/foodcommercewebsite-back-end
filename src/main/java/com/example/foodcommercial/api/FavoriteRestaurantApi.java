@@ -30,8 +30,8 @@ public class FavoriteRestaurantApi {
 	}
 	
 	
-	@PostMapping("/addfavoriterestaurant/{userid}/{restaurantid}")
-	public Result addFavoriteRestaurant(@PathVariable(value="userid") Long userid, @PathVariable(value="restaurantid") Long restaurantid) {
+	@PostMapping("/addfavoriterestaurant")
+	public Result addFavoriteRestaurant(@RequestParam Long userid, @RequestParam Long restaurantid) {
 		return this.favoriteRestaurnatService.addFavoriteRestaurant(userid, restaurantid);
 	}
 	@GetMapping("/getAllFavoriteRestaurantsByUserId")
@@ -39,7 +39,7 @@ public class FavoriteRestaurantApi {
 		return this.favoriteRestaurnatService.getAllFavoriteRestaurantsByUserId(userId);
 	}
 	@DeleteMapping("/delete")
-	public Result delete(Long id){
+	public Result delete(@RequestParam Long id){
 		return this.favoriteRestaurnatService.delete(id);
 	}
 

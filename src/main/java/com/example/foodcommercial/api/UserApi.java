@@ -14,11 +14,9 @@ import com.example.foodcommercial.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.foodcommercial.business.concretes.UserService;
 import com.example.foodcommercial.entities.Address;
 import com.example.foodcommercial.entities.CardInformation;
 import com.example.foodcommercial.entities.FavoriteRestaurants;
